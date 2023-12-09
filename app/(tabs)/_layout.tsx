@@ -1,55 +1,74 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable, useColorScheme } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import { Tabs } from 'expo-router'
+import Colors from '../../constants/Colors'
+import { Ionicons } from '@expo/vector-icons'
 
-import Colors from '../../constants/Colors';
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+interface TabBarIcon {
+    color: string
+    size: number
 }
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
+const TabLayout = () => {
+    const listTab = [
+        {
+            name: 'index',
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }: TabBarIcon) => <Ionicons name="home" size={size} color={color} />,
+        },
+        {
+            name: 'cart',
+            tabBarLabel: 'Cart',
+            tabBarIcon: ({ color, size }: TabBarIcon) => <Ionicons name="md-cart-outline" size={size} color={color} />,
+        },
+        {
+            name: 'chat',
+            tabBarLabel: 'Chat',
+            tabBarIcon: ({ color, size }: TabBarIcon) => (
+                <Ionicons name="chatbubble-ellipses-outline" size={size} color={color} />
+            ),
+        },
+        {
+            name: 'notification',
+            tabBarLabel: 'notification',
+            tabBarIcon: ({ color, size }: TabBarIcon) => (
+                <Ionicons name="notifications-outline" size={size} color={color} />
+            ),
+        },
+        {
+            name: 'profile',
+            tabBarLabel: 'Profile',
+            tabBarIcon: ({ color, size }: TabBarIcon) => (
+                <Ionicons name="person-circle-outline" size={size} color={color} />
+            ),
+        },
+    ]
+    return (
+        <Tabs
+            screenOptions={{
+                tabBarActiveTintColor: Colors.primary,
+                tabBarLabelStyle: {},
+            }}
+        >
+            {listTab.map((tab, index) => {
+                const { name, tabBarLabel, tabBarIcon } = tab
+                return (
+                    <Tabs.Screen
+                        key={name + index}
+                        name={name}
+                        options={{
+                            tabBarLabel,
+                            tabBarIcon,
+                            headerTitleAlign: 'center',
+                            headerTitle: tabBarLabel,
+                        }}
+                    />
+                )
+            })}
+        </Tabs>
+    )
 }
+
+export default TabLayout
+
+const styles = StyleSheet.create({})
