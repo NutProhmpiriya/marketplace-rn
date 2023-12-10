@@ -7,6 +7,8 @@ import { useColorScheme } from 'react-native'
 import TouchableClose from '../components/TouchableClose'
 import { JsStack } from '../components/JsStack'
 import { TransitionPresets } from '@react-navigation/stack'
+import { getRedirectResult, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth'
+import firebaseService from '../services/firebase.service'
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -48,13 +50,18 @@ export default function RootLayout() {
 function RootLayoutNav() {
     const colorScheme = useColorScheme()
 
+    useEffect(() => {
+        onAuthStateChanged(firebaseService.auth, (user) => {
+            console.log('onAuthStateChanged', user)
+        })
+    }, [])
+
     return (
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
             <Stack>
-                <JsStack.Screen
+                <Stack.Screen
                     name="(modals)/login"
                     options={{
-                        ...TransitionPresets.ModalPresentationIOS,
                         presentation: 'modal',
                         headerTitleAlign: 'center',
                         headerRight: TouchableClose,

@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Tabs } from 'expo-router'
 import Colors from '../../constants/Colors'
@@ -20,13 +19,6 @@ const TabLayout = () => {
             name: 'cart',
             tabBarLabel: 'Cart',
             tabBarIcon: ({ color, size }: TabBarIcon) => <Ionicons name="md-cart-outline" size={size} color={color} />,
-        },
-        {
-            name: 'chat',
-            tabBarLabel: 'Chat',
-            tabBarIcon: ({ color, size }: TabBarIcon) => (
-                <Ionicons name="chatbubble-ellipses-outline" size={size} color={color} />
-            ),
         },
         {
             name: 'notification',
@@ -70,5 +62,3 @@ const TabLayout = () => {
 }
 
 export default TabLayout
-
-const styles = StyleSheet.create({})

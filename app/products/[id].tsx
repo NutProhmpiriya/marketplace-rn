@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const ChatPage = () => {
+const ProductDetailPage = () => {
     return (
         <View>
-            <Text>ChatPage</Text>
+            <Text>ProductDetailPage</Text>
         </View>
     )
 }
 
-export default ChatPage
+export default ProductDetailPage
 
 const styles = StyleSheet.create({})
