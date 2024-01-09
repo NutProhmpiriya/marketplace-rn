@@ -1,6 +1,6 @@
 import React from 'react'
 import { Tabs } from 'expo-router'
-import Colors from '../../constants/Colors'
+import Colors from '../../utils/styles/colors'
 import { Ionicons } from '@expo/vector-icons'
 
 interface TabBarIcon {
@@ -28,8 +28,8 @@ const TabLayout = () => {
             ),
         },
         {
-            name: 'profile',
-            tabBarLabel: 'Profile',
+            name: 'account',
+            tabBarLabel: 'Account',
             tabBarIcon: ({ color, size }: TabBarIcon) => (
                 <Ionicons name="person-circle-outline" size={size} color={color} />
             ),

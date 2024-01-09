@@ -5,11 +5,8 @@ import { SplashScreen, Stack } from 'expo-router'
 import { useEffect } from 'react'
 import { useColorScheme } from 'react-native'
 import TouchableClose from '../components/TouchableClose'
-import { JsStack } from '../components/JsStack'
-import { TransitionPresets } from '@react-navigation/stack'
-import { getRedirectResult, GoogleAuthProvider, onAuthStateChanged } from 'firebase/auth'
-import firebaseService from '../services/firebase.service'
-
+import { GluestackUIProvider } from "@gluestack-ui/themed"
+import { config } from "@gluestack-ui/config" 
 export {
     // Catch any errors thrown by the Layout component.
     ErrorBoundary,
@@ -51,25 +48,26 @@ function RootLayoutNav() {
     const colorScheme = useColorScheme()
 
     useEffect(() => {
-        onAuthStateChanged(firebaseService.auth, (user) => {
-            console.log('onAuthStateChanged', user)
-        })
+   
     }, [])
 
     return (
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+                <GluestackUIProvider config={config}>
+
             <Stack>
                 <Stack.Screen
-                    name="(modals)/login"
+                    name="(modals)/auth"
                     options={{
                         presentation: 'modal',
                         headerTitleAlign: 'center',
                         headerRight: TouchableClose,
-                        headerTitle: 'Login Or Signup',
+                        headerTitle: 'Signin Or Signup',
                     }}
                 />
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             </Stack>
+            </GluestackUIProvider>
         </ThemeProvider>
     )
 }
