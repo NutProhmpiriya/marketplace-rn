@@ -18,8 +18,25 @@ interface CartStore {
 
 const useCartStore = create<CartStore>((set) => ({
     cart: [],
-    addCartItem: (cartItem) => set((state) => ({ cart: [...state.cart, cartItem] })),
-    deleteCartItem: (cartItem) => set((state) => ({ cart: state.cart.filter((cartItem) => cartItem.id !== cartItem.id) })),
+    addCartItem: (cartItem) => set((state) => {
+        const cartItemIndex = state.cart.findIndex((item) => item.id === cartItem.id)
+        if (cartItemIndex !== -1) {
+            state.cart[cartItemIndex].quantity += 1
+            return { cart: [...state.cart] }
+        }
+        return { cart: [ ...state.cart, cartItem ] }
+    }),
+    deleteCartItem: (cartItem) => set((state) => {
+        const cartItemIndex = state.cart.findIndex((item) => item.id === cartItem.id)
+        if (cartItemIndex !== -1) {
+            state.cart[cartItemIndex].quantity -= 1
+            if (state.cart[cartItemIndex].quantity === 0) {
+                state.cart.splice(cartItemIndex, 1)
+            }
+            return { cart: [...state.cart] }
+        }
+        return { cart: [...state.cart] }
+    }),
     clearCart: () => set({ cart: [] }),
 }))
 
