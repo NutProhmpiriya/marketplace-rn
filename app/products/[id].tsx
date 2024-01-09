@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { ProductInterface } from 'components/products/ProductCard'
 import { useLocalSearchParams, usePathname, useRouter } from 'expo-router'
 import { Box, Button, ButtonText, Divider, Heading, Image, ScrollView } from '@gluestack-ui/themed'
-import { useCartStore } from 'stores/cart'
+import useCartStore from 'stores/cartStore'
 
 const ProductDetailPage = () => {
     const { id } = useLocalSearchParams()
     const [product, setProduct] = useState<ProductInterface | null>(null)
     const router = useRouter()
+    const cartStore = useCartStore()
 
     useEffect(() => {
         getProduct()
@@ -20,7 +21,17 @@ const ProductDetailPage = () => {
             .then((json) => setProduct(json))
     }
 
-    const onAddCartItem = () => {}
+    const onAddCartItem = () => {
+        if (!product) return
+        cartStore.addCartItem({
+            id: product?.id,
+            name: product?.title,
+            price: product?.price,
+            image: product?.image,
+            quantity: 1,
+        })
+        router.push('/')
+    }
 
     const goCheckout = () => {
         router.push({
