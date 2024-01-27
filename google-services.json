@@ -1,0 +1,46 @@
+{
+    "project_info": {
+        "project_number": "103502673916",
+        "project_id": "marketplace-rn-f38bb",
+        "storage_bucket": "marketplace-rn-f38bb.appspot.com"
+    },
+    "client": [
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:103502673916:android:423b03b65c094852f46479",
+                "android_client_info": {
+                    "package_name": "com.nut.developer.marketplacern"
+                }
+            },
+            "oauth_client": [
+                {
+                    "client_id": "103502673916-7mp784il1us2vn59c7cbvge51jk4stgm.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyDs0eTNYaQ2VwSJyRncdrr9xCO8SZWRmMA"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": [
+                        {
+                            "client_id": "103502673916-7mp784il1us2vn59c7cbvge51jk4stgm.apps.googleusercontent.com",
+                            "client_type": 3
+                        },
+                        {
+                            "client_id": "103502673916-7km122a86ut2qieuhdngb1s9pgi92cjf.apps.googleusercontent.com",
+                            "client_type": 2,
+                            "ios_info": {
+                                "bundle_id": "com.nut.developer.marketplacern"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "configuration_version": "1"
+}
