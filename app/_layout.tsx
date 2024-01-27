@@ -7,6 +7,7 @@ import { GluestackUIProvider } from '@gluestack-ui/themed'
 import { config } from '@gluestack-ui/config'
 import useUserStore from '@/stores/userStores'
 import auth from '@react-native-firebase/auth'
+import TouchableClose from '@/components/common/TouchableClose'
 
 export {
     // Catch any errors thrown by the Layout component.
@@ -74,6 +75,15 @@ function RootLayoutNav() {
     return (
         <GluestackUIProvider config={config}>
             <Stack>
+                <Stack.Screen
+                    name="(modals)/auth"
+                    options={{
+                        presentation: 'modal',
+                        headerTitleAlign: 'center',
+                        headerRight: TouchableClose,
+                        headerTitle: 'Signin Or Signup',
+                    }}
+                />
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             </Stack>
         </GluestackUIProvider>

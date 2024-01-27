@@ -1,36 +1,56 @@
-import { StyleSheet, View, Text } from 'react-native'
-import GoogleAuth from '@/components/auth/GoogleAuthBtn'
-import useUserStore from '@/stores/userStores'
-import EmailSignup from '@/components/auth/EmailSignup'
-import SignoutBtn from '@/components/auth/SignoutBtn'
+import { StyleSheet } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import ProductCard, { ProductInterface } from '@/components/products/ProductCard'
+import { Box, ScrollView, Input, InputSlot, InputIcon, InputField, SearchIcon, Text } from '@gluestack-ui/themed'
+import { getProducts as fetchProducts } from '@/utils/productData'
 
-export default function TabOneScreen() {
-    const { user } = useUserStore()
+const HomePage = () => {
+    const [products, setProducts] = useState<ProductInterface[] | null>(null)
+
+    useEffect(() => {
+        getProducts()
+    }, [])
+
+    const searchProducts = (value: string) => {
+        if (value) {
+            const filteredProducts = products?.filter((product) => product.title.includes(value))
+            if (filteredProducts) setProducts(filteredProducts)
+        } else {
+            getProducts()
+        }
+    }
+
+    const getProducts = () => {
+        const products = fetchProducts()
+        setProducts(products)
+    }
+    if (!products) {
+        return <Text>Loading...</Text>
+    }
     return (
-        <View style={styles.container}>
-            <EmailSignup />
-            <Text style={styles.title}> Or</Text>
-            <GoogleAuth />
-            <SignoutBtn />
-            {user && <Text>{JSON.stringify(user, null, 2)}</Text>}
-        </View>
+        <ScrollView>
+            <Input style={styles.inputSearch}>
+                <InputSlot pl="$3">{/* <InputIcon as={SearchIcon} /> */}</InputSlot>
+                <InputField placeholder="Search..." onChangeText={(value) => searchProducts(value)} />
+            </Input>
+
+            <Box flexDirection="row" flexWrap="wrap">
+                {products?.map((product) => <ProductCard key={product.title} product={product} />)}
+            </Box>
+        </ScrollView>
     )
 }
 
+export default HomePage
+
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        margin: 20,
-    },
-    separator: {
-        marginVertical: 30,
-        height: 1,
-        width: '80%',
+    inputSearch: {
+        width: '95%',
+        height: 50,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        marginBottom: 10,
+        marginTop: 10,
+        marginHorizontal: 10,
     },
 })

@@ -6,7 +6,6 @@ import { FormControl, Input, InputField, Button, ButtonText } from '@gluestack-u
 const EmailSignup = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [showAlertDialog, setShowAlertDialog] = useState(false)
     const [alertDialogMessage, setAlertDialogMessage] = useState('')
 
     const signup = () => {
@@ -32,9 +31,7 @@ const EmailSignup = () => {
             })
     }
 
-    useEffect(() => {
-        if (alertDialogMessage) setShowAlertDialog(true)
-    }, [alertDialogMessage])
+    useEffect(() => {}, [alertDialogMessage])
 
     return (
         <View style={styles.container}>

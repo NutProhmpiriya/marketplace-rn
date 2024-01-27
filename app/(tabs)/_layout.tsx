@@ -1,12 +1,65 @@
 import React from 'react'
-import FontAwesome from '@expo/vector-icons/FontAwesome'
-import { Link, Tabs } from 'expo-router'
-import { Pressable } from 'react-native'
+import { Tabs } from 'expo-router'
+import Colors from '@/utils/styles/colors'
+import { Ionicons } from '@expo/vector-icons'
+import CartBadge from '@/components/cart/CartBadge'
 
-export default function TabLayout() {
+interface TabBarIcon {
+    color: string
+    size: number
+}
+
+const TabLayout = () => {
+    const listTab = [
+        {
+            name: 'index',
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }: TabBarIcon) => <Ionicons name="home" size={size} color={color} />,
+        },
+        {
+            name: 'cart',
+            tabBarLabel: 'Cart',
+            tabBarIcon: ({ color, size }: TabBarIcon) => <CartBadge color={color} size={size} />,
+        },
+        {
+            name: 'notification',
+            tabBarLabel: 'notification',
+            tabBarIcon: ({ color, size }: TabBarIcon) => (
+                <Ionicons name="notifications-outline" size={size} color={color} />
+            ),
+        },
+        {
+            name: 'account',
+            tabBarLabel: 'Account',
+            tabBarIcon: ({ color, size }: TabBarIcon) => (
+                <Ionicons name="person-circle-outline" size={size} color={color} />
+            ),
+        },
+    ]
     return (
-        <Tabs>
-            <Tabs.Screen name="index" options={{ title: 'Tab One' }} />
+        <Tabs
+            screenOptions={{
+                tabBarActiveTintColor: Colors.primary,
+                tabBarLabelStyle: {},
+            }}
+        >
+            {listTab.map((tab, index) => {
+                const { name, tabBarLabel, tabBarIcon } = tab
+                return (
+                    <Tabs.Screen
+                        key={name + index}
+                        name={name}
+                        options={{
+                            tabBarLabel,
+                            tabBarIcon,
+                            headerTitleAlign: 'center',
+                            headerTitle: tabBarLabel,
+                        }}
+                    />
+                )
+            })}
         </Tabs>
     )
 }
+
+export default TabLayout

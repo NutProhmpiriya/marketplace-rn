@@ -4,6 +4,7 @@ import auth from '@react-native-firebase/auth'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { Button, ButtonText } from '@gluestack-ui/themed'
 import { AntDesign } from '@expo/vector-icons'
+import { router } from 'expo-router'
 
 GoogleSignin.configure({
     webClientId: '103502673916-7mp784il1us2vn59c7cbvge51jk4stgm.apps.googleusercontent.com',
@@ -16,6 +17,7 @@ const GoogleAuthBtn = () => {
             const { idToken } = await GoogleSignin.signIn()
             const googleCredential = auth.GoogleAuthProvider.credential(idToken)
             await auth().signInWithCredential(googleCredential)
+            router.push(`/`)
         } catch (error: any) {
             console.error('onGoogleButtonPress', error.message)
         }

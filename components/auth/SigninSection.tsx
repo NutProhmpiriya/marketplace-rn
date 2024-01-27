@@ -2,20 +2,23 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import GoogleAuth from '@/components/auth/GoogleAuthBtn'
 import useUserStore from '@/stores/userStores'
-import EmailSignup from '@/components/auth/EmailSignup'
-import SignoutBtn from '@/components/auth/SignoutBtn'
+import EmailSignin from '@/components/auth/EmailSignin'
+import { Button, ButtonText } from '@gluestack-ui/themed'
 
-const SigninSection = () => {
-    const { user } = useUserStore()
+interface SigninSectionProps {
+    setCurrentSection: (section: 'signin' | 'signup' | 'forgot') => void
+}
+
+const SigninSection = (props: SigninSectionProps) => {
     return (
-        <View>
-            <View style={styles.container}>
-                <EmailSignup />
-                <Text style={styles.title}> Or</Text>
-                <GoogleAuth />
-                <SignoutBtn />
-                {user && <Text>{JSON.stringify(user, null, 2)}</Text>}
-            </View>
+        <View style={styles.container}>
+            <EmailSignin />
+            <View style={{ marginBottom: 20 }} />
+            <GoogleAuth />
+            <Text style={styles.title}> Or</Text>
+            <Button variant="link" style={styles.btnSignUp} onPress={() => props.setCurrentSection('signup')}>
+                <ButtonText>Sign Up</ButtonText>
+            </Button>
         </View>
     )
 }
@@ -27,6 +30,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        width: '100%',
     },
     title: {
         fontSize: 20,
@@ -37,5 +41,9 @@ const styles = StyleSheet.create({
         marginVertical: 30,
         height: 1,
         width: '80%',
+    },
+    btnSignUp: {
+        width: '85%',
+        height: 50,
     },
 })
