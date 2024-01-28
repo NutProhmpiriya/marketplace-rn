@@ -53,6 +53,7 @@ const CheckoutPage = () => {
                 await creeateOrderByFirebase(cart, paymentIntent?.id, user)
                 clearCart()
                 Alert.alert('Success', `The payment was confirmed successfully!`)
+                router.push(`/account`)
             } else {
                 Alert.alert('Error', `User not found!`)
             }
@@ -63,6 +64,7 @@ const CheckoutPage = () => {
             setLoading(false)
         }
     }
+
     useEffect(() => {
         if (user) {
             setNameCard(user.displayName || '')

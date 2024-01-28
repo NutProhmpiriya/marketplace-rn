@@ -6,7 +6,6 @@ import { FormControl, Input, InputField, Button, ButtonText } from '@gluestack-u
 const EmailSignin = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [showAlertDialog, setShowAlertDialog] = useState(false)
     const [alertDialogMessage, setAlertDialogMessage] = useState('')
 
     const signup = () => {
@@ -17,24 +16,19 @@ const EmailSignin = () => {
         auth()
             .signInWithEmailAndPassword(email, password)
             .then(() => {
-                console.log('User account created & signed in!')
+                Alert.alert('User account created & signed in!')
             })
             .catch((error) => {
                 if (error.code === 'auth/email-already-in-use') {
-                    setAlertDialogMessage('That email address is already in use!')
+                    Alert.alert('That email address is already in use!')
                 }
-
                 if (error.code === 'auth/invalid-email') {
-                    setAlertDialogMessage('That email address is invalid!')
+                    Alert.alert('That email address is invalid!')
                 }
 
                 console.error(error)
             })
     }
-
-    useEffect(() => {
-        if (alertDialogMessage) setShowAlertDialog(true)
-    }, [alertDialogMessage])
 
     return (
         <View style={styles.container}>

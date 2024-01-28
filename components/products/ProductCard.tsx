@@ -34,7 +34,6 @@ const ProductCard = (props: Props) => {
             <Box padding={10} w={'$2/3'}>
                 <TextWrap>{title}</TextWrap>
                 <Text> Price: {price}</Text>
-
                 <Button style={styles.btnMore} onTouchEnd={goToProductPage}>
                     <Text style={{ color: 'white' }}>More...</Text>
                 </Button>

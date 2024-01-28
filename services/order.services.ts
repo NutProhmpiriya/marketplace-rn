@@ -15,9 +15,24 @@ export interface Order {
     id: string
     orderItems: OrderItem[]
     totalprice: number
-    createdAt: number
+    createdAt: {
+        seconds: number
+        nanoseconds: number
+    }
     paymentStatus: string
     paymentId: string
+    customer?: {
+        id: string
+        name: string
+        email: string
+        phone: string
+    }
+    address?: {
+        street: string
+        city: string
+        state: string
+        zip: string
+    }
 }
 
 export async function createOrder(amount: number): Promise<string> {
@@ -60,9 +75,39 @@ export async function creeateOrderByFirebase(cart: CartItem[], paymentId: string
             .catch((error) => {
                 console.error('Create Order Error: ', error)
             })
-        console.log('Create Order Sucess')
     } catch (error: any) {
         console.log('Create Order Error: ', error)
+        throw new Error(error)
+    }
+}
+
+
+export async function getOrders(user: User): Promise<Order[]> {
+    try {
+        const orders: Order[] = []
+        const querySnapshot = await firestore().collection('Orders')
+            .where('customer.id', '==', user.uuid)
+            .get()
+        querySnapshot.forEach((doc) => {
+            const order = doc.data() as Order
+            order.id = doc.id
+            orders.push(order)
+        })
+        return orders
+    } catch (error: any) {
+        console.error('Get Orders Error: ', error)
+        throw new Error(error)
+    }
+}
+
+export async function getOrder(orderId: string): Promise<Order> {
+    try {
+        const doc = await firestore().collection('Orders').doc(orderId).get()
+        const order = doc.data() as Order
+        order.id = doc.id
+        return order
+    } catch (error: any) {
+        console.error('Get Order Error: ', error)
         throw new Error(error)
     }
 }

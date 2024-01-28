@@ -8,7 +8,7 @@ export async function stripPaymentIntent(amount: number): Promise<string> {
         const response = await axios.post(url, body, { headers })
         return response.data.clientSecret
     } catch (error: any) {
-        console.log('stripPaymentIntent error: ', error)
+        console.error('stripPaymentIntent error: ', error)
         const errorMessage = error?.response?.data?.error || error.message
         throw new Error(errorMessage)
     }
