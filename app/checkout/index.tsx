@@ -7,18 +7,9 @@ import useCartStore from '@/stores/cartStores'
 import { Stack, useRouter } from 'expo-router'
 import { stripPaymentIntent } from '@/services/payment.services'
 import { creeateOrderByFirebase } from '@/services/order.services'
+import { getNotificationUnReadByCustomerId } from '@/services/notification.services'
+import useNotiStore from '@/stores/notitStores'
 
-interface CartDetail {
-    last4: string
-    expiryMonth: number
-    expiryYear: number
-    complete: boolean
-    brand: string
-    validExpiryDate: string
-    validNumber: string
-    validCVC: string
-    postalCode: string
-}
 const publishableKey =
     'pk_test_51OdPWBCi1YxhEpKj5m9BiTDt1aSPCluWWAQJzx3gjiNEJSWZxvqUTr01O76CqSPRZPqk19ZDivh3CdBzOPHByYkS007twLJ8Bw'
 
@@ -29,6 +20,7 @@ const CheckoutPage = () => {
     const { confirmPayment } = useConfirmPayment()
     const [loading, setLoading] = useState(false)
     const [isDisabled, setIsDisabled] = useState(true)
+    const { addNoti } = useNotiStore()
 
     const router = useRouter()
     const onPay = async () => {
@@ -78,12 +70,7 @@ const CheckoutPage = () => {
             setIsDisabled(true)
         }
     }
-    if (!user) {
-        router.push(`/auth`)
-    }
-    if (cart.length === 0) {
-        router.push(`/`)
-    }
+
     return (
         <StripeProvider publishableKey={publishableKey}>
             <Stack.Screen options={{ title: 'Checkout' }} />

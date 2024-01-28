@@ -3,6 +3,7 @@ import { Tabs } from 'expo-router'
 import Colors from '@/utils/styles/colors'
 import { Ionicons } from '@expo/vector-icons'
 import CartBadge from '@/components/cart/CartBadge'
+import NotiBasge from '@/components/notification/NotiBasge'
 
 interface TabBarIcon {
     color: string
@@ -24,9 +25,7 @@ const TabLayout = () => {
         {
             name: 'notification',
             tabBarLabel: 'Notification',
-            tabBarIcon: ({ color, size }: TabBarIcon) => (
-                <Ionicons name="notifications-outline" size={size} color={color} />
-            ),
+            tabBarIcon: ({ color, size }: TabBarIcon) => <NotiBasge color={color} size={size} />,
         },
         {
             name: 'account',

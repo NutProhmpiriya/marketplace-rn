@@ -18,7 +18,7 @@ const OrderDetail = () => {
     }
 
     const convertTime = () => {
-        if (!order?.createdAt) return ''
+        if (!order?.createdAt?.seconds) return ''
         const date = new Date(order?.createdAt?.seconds * 1000)
         return date.toLocaleString()
     }

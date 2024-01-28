@@ -1,8 +1,7 @@
 import { CartItem } from '@/stores/cartStores'
 import { User } from '@/stores/userStores'
 import firestore from '@react-native-firebase/firestore'
-import axios from 'axios'
-import { v4 as uuidv4 } from 'uuid'
+import { createNotificationForCreateOrder } from './notification.services'
 
 export interface OrderItem {
     productId: string
@@ -15,9 +14,9 @@ export interface Order {
     id: string
     orderItems: OrderItem[]
     totalprice: number
-    createdAt: {
-        seconds: number
-        nanoseconds: number
+    createdAt?: {
+        seconds?: number
+        nanoseconds?: number
     }
     paymentStatus: string
     paymentId: string
@@ -35,21 +34,9 @@ export interface Order {
     }
 }
 
-export async function createOrder(amount: number): Promise<string> {
-    try {
-        const url = ''
-        const headers = { 'Content-Type': 'application/json' }
-        const body = { amount: amount }
-        const response = await axios.post(url, body, { headers })
-        return response.data.client_secret
-    } catch (error: any) {
-        const errorMessage = error.response.data || error.message
-        throw new Error(errorMessage)
-    }
-}
-
 export async function creeateOrderByFirebase(cart: CartItem[], paymentId: string, user: User) {
     try {
+        let orderId = ''
         const order = {
             orderItems: cart.map((item) => ({
                 productId: item.id,
@@ -71,12 +58,14 @@ export async function creeateOrderByFirebase(cart: CartItem[], paymentId: string
         await firestore().collection('Orders').add(order)
             .then((docRef) => {
                 console.log('Create Order Sucess: ', docRef.id)
+                orderId = docRef.id
             })
             .catch((error) => {
                 console.error('Create Order Error: ', error)
             })
+        await createNotificationForCreateOrder({ customerId: user.uuid || '', customerName: user.displayName || '' })
     } catch (error: any) {
-        console.log('Create Order Error: ', error)
+        console.error('Create Order Error: ', error)
         throw new Error(error)
     }
 }
