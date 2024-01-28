@@ -1,16 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { ProductInterface } from '@/components/products/ProductCard'
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import { Box, Button, ButtonText, Divider, Heading, Image, ScrollView } from '@gluestack-ui/themed'
 import useCartStore from '@/stores/cartStores'
 import * as productData from '@/services/product.services'
+import useUserStore from '@/stores/userStores'
 
 const ProductDetailPage = () => {
     const { id } = useLocalSearchParams()
     const [product, setProduct] = useState<ProductInterface | null>(null)
     const router = useRouter()
     const cartStore = useCartStore()
+    const { user } = useUserStore()
 
     useEffect(() => {
         const product = productData.getProduct(Number(id))
@@ -18,6 +20,11 @@ const ProductDetailPage = () => {
     }, [])
 
     const onAddCartItem = () => {
+        if (!user) {
+            Alert.alert('Please login first')
+            router.push(`/(modals)/auth`)
+            return
+        }
         if (!product) return
         cartStore.addCartItem({
             id: product?.id,
@@ -30,6 +37,7 @@ const ProductDetailPage = () => {
     }
 
     const goCheckout = () => {
+        if (cartStore.cart.length === 0) return Alert.alert('Cart is empty')
         router.push('/checkout/')
     }
     if (!product) {

@@ -10,7 +10,7 @@ const auth = () => {
     return (
         <View style={styles.container}>
             {currentSection === 'signin' && <SigninSection setCurrentSection={setCurrentSection} />}
-            {currentSection === 'signup' && <SignupSection />}
+            {currentSection === 'signup' && <SignupSection setCurrentSection={setCurrentSection} />}
             {/* {currentSection === 'forgot' && <SigninSection />} */}
         </View>
     )

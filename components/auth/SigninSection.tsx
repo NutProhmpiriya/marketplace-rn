@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import GoogleAuth from '@/components/auth/GoogleAuthBtn'
-import useUserStore from '@/stores/userStores'
 import EmailSignin from '@/components/auth/EmailSignin'
 import { Button, ButtonText } from '@gluestack-ui/themed'
 
