@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import ProductCard, { ProductInterface } from '@/components/products/ProductCard'
 import { Box, ScrollView, Input, InputSlot, InputIcon, InputField, SearchIcon, Text } from '@gluestack-ui/themed'
-import { getProducts as fetchProducts } from '@/utils/productData'
+import { getProducts as fetchProducts } from '@/services/product.services'
 
 const HomePage = () => {
     const [products, setProducts] = useState<ProductInterface[] | null>(null)

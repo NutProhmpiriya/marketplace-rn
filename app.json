@@ -34,7 +34,8 @@
             "@react-native-firebase/app",
             "@react-native-firebase/auth",
             "@react-native-firebase/crashlytics",
-            "@react-native-google-signin/google-signin"
+            "@react-native-google-signin/google-signin",
+            ["@stripe/stripe-react-native", { "enableGooglePay": true }]
         ],
         "experiments": {
             "typedRoutes": true

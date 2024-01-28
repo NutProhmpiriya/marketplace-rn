@@ -1,10 +1,10 @@
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { ProductInterface } from '@/components/products/ProductCard'
-import { useLocalSearchParams, useRouter } from 'expo-router'
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import { Box, Button, ButtonText, Divider, Heading, Image, ScrollView } from '@gluestack-ui/themed'
 import useCartStore from '@/stores/cartStores'
-import * as productData from '@/utils/productData'
+import * as productData from '@/services/product.services'
 
 const ProductDetailPage = () => {
     const { id } = useLocalSearchParams()
@@ -35,8 +35,10 @@ const ProductDetailPage = () => {
     if (!product) {
         return <Text>Loading...</Text>
     }
+
     return (
         <ScrollView style={{ height: '100%' }}>
+            <Stack.Screen options={{ title: 'Product Detail' }} />
             <Image source={{ uri: product?.image }} alt={product?.title} w={'$full'} h={'$96'} />
             <Box style={styles.content}>
                 <Heading>{product?.title}</Heading>
@@ -50,10 +52,10 @@ const ProductDetailPage = () => {
                 <Text style={styles.textDescription}>{product?.description}</Text>
             </Box>
             <Box style={styles.bottomBar} w={'100%'} justifyContent="space-between" gap={'$1'}>
-                <Button w={'50%'} h="$16" style={{ borderRadius: 20 }} onPress={onAddCartItem}>
+                <Button style={styles.btn} onPress={onAddCartItem}>
                     <ButtonText>Add Cart</ButtonText>
                 </Button>
-                <Button w={'50%'} h="$16" style={{ borderRadius: 20 }} onPress={goCheckout}>
+                <Button style={styles.btn} onPress={goCheckout}>
                     <ButtonText>Check Out</ButtonText>
                 </Button>
             </Box>
@@ -81,5 +83,11 @@ const styles = StyleSheet.create({
         position: 'relative',
         bottom: 0,
         flexDirection: 'row',
+    },
+    btn: {
+        borderRadius: 10,
+        backgroundColor: 'black',
+        width: '50%',
+        height: 60,
     },
 })

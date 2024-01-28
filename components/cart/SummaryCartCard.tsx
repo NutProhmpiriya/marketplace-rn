@@ -27,7 +27,7 @@ const SummaryCartCard = () => {
     return (
         <Box style={styles.container}>
             <Text>Total price {getTotalPrice()}</Text>
-            <Button style={{ marginTop: 10 }} onPress={() => gotoCheckout()}>
+            <Button style={{ marginTop: 10, backgroundColor: 'black', height: 50 }} onPress={() => gotoCheckout()}>
                 <ButtonText>Checkout</ButtonText>
             </Button>
         </Box>

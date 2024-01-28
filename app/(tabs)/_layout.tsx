@@ -23,7 +23,7 @@ const TabLayout = () => {
         },
         {
             name: 'notification',
-            tabBarLabel: 'notification',
+            tabBarLabel: 'Notification',
             tabBarIcon: ({ color, size }: TabBarIcon) => (
                 <Ionicons name="notifications-outline" size={size} color={color} />
             ),

@@ -14,9 +14,10 @@ interface CartStore {
     addCartItem: (cartItem: CartItem) => void
     deleteCartItem: (cartItem: CartItem) => void
     clearCart: () => void
+    totalprice: () => number
 }
 
-const useCartStore = create<CartStore>((set) => ({
+const useCartStore = create<CartStore>((set, get) => ({
     cart: [],
     addCartItem: (cartItem) => set((state) => {
         const cartItemIndex = state.cart.findIndex((item) => item.id === cartItem.id)
@@ -38,6 +39,7 @@ const useCartStore = create<CartStore>((set) => ({
         return { cart: [...state.cart] }
     }),
     clearCart: () => set({ cart: [] }),
+    totalprice: () => get().cart.reduce((total, item) => total + item.price * item.quantity, 0)
 }))
 
 export default useCartStore

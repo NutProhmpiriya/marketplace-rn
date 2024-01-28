@@ -23,10 +23,18 @@ const CartItemCard = (props: CartItemCardProps) => {
                 </Box>
             </Box>
             <Box flex={1} style={styles.action} gap={'$5'}>
-                <Button flex={1} onPress={() => addCartItem(props.cartItem)}>
+                <Button
+                    style={{ backgroundColor: 'black', height: '100%' }}
+                    flex={1}
+                    onPress={() => addCartItem(props.cartItem)}
+                >
                     <ButtonText>+</ButtonText>
                 </Button>
-                <Button flex={1} onPress={() => deleteCartItem(props.cartItem)}>
+                <Button
+                    style={{ backgroundColor: 'black', height: '100%' }}
+                    flex={1}
+                    onPress={() => deleteCartItem(props.cartItem)}
+                >
                     <ButtonText>-</ButtonText>
                 </Button>
             </Box>
